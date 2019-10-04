@@ -1,8 +1,6 @@
 import pandas as pd
 import sqlalchemy
 
-
-
 orders = pd.read_csv("orders.csv")
 employees = pd.read_csv('employees.csv')
 products = pd.read_csv('products.csv').drop_duplicates()
