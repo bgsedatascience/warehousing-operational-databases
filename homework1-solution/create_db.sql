@@ -5,7 +5,7 @@ CREATE TABLE empl (
 employee_number INTEGER PRIMARY KEY,
 last_name VARCHAR,
 first_name VARCHAR,
-reports_to FLOAT,
+reports_to INTEGER,
 job_title VARCHAR,
 office_code INTEGER
 );
@@ -40,15 +40,15 @@ customer_number INTEGER
 );
 
 CREATE TABLE order_details (
-order_number INTEGER PRIMARY KEY,
-product_code INTEGER,
+order_number INTEGER,
+product_code VARCHAR,
 quantity_ordered INTEGER,
 price_each FLOAT,
 order_line_number INTEGER
 );
 
 CREATE TABLE products (
-product_code INTEGER PRIMARY KEY,
+product_code VARCHAR PRIMARY KEY,
 product_line VARCHAR,
 product_name VARCHAR,
 product_scale VARCHAR,
