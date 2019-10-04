@@ -1,10 +1,10 @@
+# another try with dataset, can also be used for display of tables
 import dataset
 
 db = dataset.connect('postgresql://postgres@localhost:5432/foo')
 print(db.tables)
-
-employees_in_db = db['order_overview']
-print(employees_in_db.columns)
-for employee in employees_in_db:
-   print(employee['required_date'])
+table = db['empl']
+print(table.columns)
+for row in table:
+   print(row['office_code'])
 #print(len(db['customers']))

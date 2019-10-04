@@ -1,5 +1,4 @@
 import pandas as pd
-import dataset
 import sqlalchemy
 
 
@@ -9,6 +8,10 @@ employees = pd.read_csv('employees.csv')
 products = pd.read_csv('products.csv').drop_duplicates()
 
 empl = employees[['employee_number', 'last_name', 'first_name', 'reports_to', 'job_title', 'office_code']].drop_duplicates()
+
+# replace NaN of reports_to of boss to 0 in order to be able to convert to int
+empl['reports_to'] = empl['reports_to'].fillna(0).astype(int)
+
 offices = employees[['office_code', 'city', 'state', 'country', 'office_location']].drop_duplicates()
 customers = orders[['customer_number', 'customer_name', 'city', 'state', 'country', 'sales_rep_employee_number', 'credit_limit', 'customer_location']].drop_duplicates()
 order_overview = orders[['order_number', 'order_date', 'required_date', 'shipped_date', 'status', 'comments', 'customer_number']].drop_duplicates()
