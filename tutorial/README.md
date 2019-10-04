@@ -80,6 +80,43 @@ And see that we entered it correctly:
 SELECT * FROM bar;
 ```
 
+## Writing SQL files
+
+Just like with any language, we can write SQL files in an IDE or a text editor. Both will usually give some opportunity to connect to a database and evaluate line interactively. Their are many IDE/GUI's available for writing and interacting with a Postgres database and many text editors have plugins that can be used as well. Take a look around the internet to see what works for you!
+
+
+For now, we will see how to do it without any special tools. We can write everything we had before into a file, call it `create-foo.sql`: 
+
+``` sql
+
+DROP DATABASE foo;
+CREATE DATABASE foo;
+\c foo;
+
+CREATE TABLE bar (
+id INTEGER PRIMARY KEY,
+name VARCHAR NOT NULL,
+phone_number VARCHAR,
+salary MONEY
+);
+
+INSERT INTO bar (id, name) VALUES (234, 'Nandan');
+```
+
+Now we can run this from the terminal. If we are using docker, it will look like this: 
+
+``` shell
+cat create-foo.sql | docker run --net host -i postgres psql --host 0.0.0.0 --user postgres
+```
+
+And if you have installed the postgresql client (psql) on your computer locally you can alternatively tell psql to read the file: 
+
+``` shell
+/usr/bin/psql --host 0.0.0.0 --user postgres -f create-foo.sql
+```
+
+And if you are using a text editor or IDE, you should be able to find how to execute the commands from a file in your setup. 
+
 ## Connecting from Python
 
 We can connect to Postgres from Python!
@@ -106,7 +143,7 @@ Then install it:
 pip install psycopg2-binary
 ```
 
-Now let's create a python file and write the following:
+Now let's create a python file, call it `foo.py` and write the following:
 
 ``` python
 import psycopg2
@@ -120,6 +157,18 @@ for row in res:
     print(row)
 
 ```
+
+Now you can run the file from your terminal: 
+
+``` shell
+python foo.py
+```
+
+And it will print out the data in your database! 
+
+Congrats, you have just written a python application that collects data from a Postgres database! This is quite a step. 
+
+## Hints
 
 `psycopg2` is very fast and it's the most popular Postgres connector for Python. But there are many other libraries we could use, that internally will use `psycopg2`, and many have nicer interfaces.
 
