@@ -1,0 +1,43 @@
+run a postgres database: 
+docker run -d --name postgres -p 5432:5432 postgres
+
+connect to database via postgres in shell:
+docker run --rm -it --net host postgres psql --host 0.0.0.0 --user postgres
+or execute psql.sh
+
+in psql promt: 
+create database with:
+CREATE DATABASE foo;
+\c foo;
+
+create table in database:
+CREATE TABLE bar (
+id INTEGER PRIMARY KEY,
+name VARCHAR NOT NULL,
+phone_number VARCHAR,
+salary MONEY
+);
+
+insert values:
+INSERT INTO bar (id, name) VALUES (234, 'Nandan');
+
+select from table:
+SELECT * FROM bar;
+
+Connect to progres from python:
+ - create virtualenv with python3 -m venv venv && source venv/bin/activate
+ - create pythonfile with
+    import psycopg2
+    conn = psycopg2.connect("dbname=foo user=postgres host=localhost")
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM bar;')
+    res = cur.fetchall()
+    for row in res:
+        print(row)
+
+
+run postgres database server with 
+docker run -d --name postgres -v /home/Dokumente/Studium/bgse/warehousing-operational-databases/homework1-solution/database:/var/lib/postgresql/data -p 5432:5432 postgres
+create database with 
+cat create_db.sql | docker run --net host -i postgres psql --host 0.0.0.0 --user postgres
+access it from python file

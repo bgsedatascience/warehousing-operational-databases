@@ -9,7 +9,7 @@ Running a postgres database is easy!
 docker run -d --name postgres -p 5432:5432 postgres
 ```
 
-Note: think about what you want to happen to the data in your database. If you `rm` your container, with the above command, your data will dissapear! This may or may not be what you want, depending on what you are doing.
+Note: think about what you want to happen to the data in your database. If you `rm` your container, with the above command, your data will dissapear! This may or may not be what you want, depending on what you are doing./
 
 Optionally, you can add a volume mount to the data directory of postgres. Take a look at the postgres docker documentation to see how! Bonus: this could be a good time to make a named volume (look up "docker named volumes" to see what that gives you).
 

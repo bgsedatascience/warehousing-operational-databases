@@ -1,5 +1,7 @@
 # Homework Week 1
 
+Tutorial in github master tutorial, 
+
 You will find data, in 3 csv files, in the "extracts" folder. 
 
 Your job is to create a SQL database, in Postgres, to store this data in _normalized_ form (3NF!). You will submit: 
