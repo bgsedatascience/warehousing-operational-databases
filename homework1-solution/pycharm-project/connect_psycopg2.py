@@ -3,8 +3,7 @@ import psycopg2
 
 conn = psycopg2.connect("dbname=foo user=postgres host=localhost")
 cur = conn.cursor()
-cur.execute('SELECT reports_to, first_name FROM empl'
-            ' WHERE reports_to < 5;')
+cur.execute('SELECT * FROM order_overview;')
 res = cur.fetchall()
 
 for row in res:
