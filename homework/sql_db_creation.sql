@@ -11,7 +11,7 @@ job_title VARCHAR,
 office_code INTEGER
 );
 
-CREATE TABLE office (
+CREATE TABLE offices (
 office_code BIGINT PRIMARY KEY,
 city VARCHAR,
 state VARCHAR,
@@ -19,8 +19,6 @@ country VARCHAR,
 office_location VARCHAR
 );
 
-
-/*
 CREATE TABLE products (
 product_code VARCHAR PRIMARY KEY,
 product_name VARCHAR,
@@ -30,11 +28,10 @@ product_vendor VARCHAR,
 product_description VARCHAR,
 quantity_in_stock INTEGER,
 buy_price FLOAT,
-_m_s_r_p FLOAT
+_m_s_r_p FLOAT,
+html_description VARCHAR
 );
-*/
 
-/*
 CREATE TABLE customers (
 customer_number INTEGER PRIMARY KEY,
 customer_name VARCHAR,
@@ -47,7 +44,6 @@ sales_rep_employee_number INTEGER,
 credit_limit FLOAT,
 customer_location VARCHAR
 );
-*/
 
 CREATE TABLE orders (
 unique_id INTEGER,
