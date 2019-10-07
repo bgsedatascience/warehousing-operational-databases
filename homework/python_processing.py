@@ -59,9 +59,6 @@ def new_table_inspector(df):
 employee=employees[['employee_number','last_name','first_name','reports_to',
                     'job_title','office_code']].drop_duplicates()
 
-# Fill NaN values with 'NULL'
-#values={'reports_to':''}
-#employee=employee.fillna(value=values)
 
 # Inspect datasets
 print(new_table_inspector(employee))
