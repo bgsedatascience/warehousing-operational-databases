@@ -20,7 +20,7 @@ empl['reports_to'] = empl['reports_to'].fillna(-1).astype(int)
 offices = employees[['office_code', 'city', 'state', 'country', 'office_location']].drop_duplicates().fillna('')
 customers = orders[['customer_number', 'customer_name', 'city', 'state', 'country', 'sales_rep_employee_number', 'credit_limit', 'customer_location']].drop_duplicates()
 # fill Nan dates with default date 1111-11-11 and convert them to SQL NULL later
-#it is not necessary for normalization to create two tables out of the order table, but it makes sense in the way the data is structured
+
 order_overview = orders[['order_number', 'order_date', 'required_date', 'shipped_date', 'status', 'comments', 'customer_number']].drop_duplicates()
 order_overview['comments']=order_overview['comments']
 order_overview[['order_date', 'required_date', 'shipped_date']]=order_overview[['order_date', 'required_date', 'shipped_date']].fillna(datetime.date(1111, 11, 11))
@@ -28,8 +28,8 @@ order_details = orders[['order_number', 'product_code', 'quantity_ordered', 'pri
 
 db = dataset.connect('postgresql://postgres@localhost:5432/foo')
 
-for df, name in [(empl, 'empl'), (offices, 'offices'), (customers, 'customers'), (order_overview, 'order_overview'),
-                 (order_details, 'order_details'), (products, 'products')]:
+for df, name in [ (offices, 'offices'), (empl, 'empl'),(customers, 'customers'), (products, 'products'), (order_overview, 'order_overview'),
+                 (order_details, 'order_details')]:
     row_dict = df.to_dict(orient='records')
     db[name].insert_many(row_dict)
 
