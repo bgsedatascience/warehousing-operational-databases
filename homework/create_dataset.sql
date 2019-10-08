@@ -2,6 +2,9 @@ DROP DATABASE ds_assignment1;
 CREATE DATABASE ds_assignment1;
 \c ds_assignment1;
 
+/* The python package dataset adds automatically new columns, I don't think it includes a way to add foreign keys,
+so I created the tables in sql with just primary key and foreigm key, the rest of the columns are added directly through python*/
+
 CREATE TABLE offices (
 	office_code INTEGER PRIMARY KEY
 );

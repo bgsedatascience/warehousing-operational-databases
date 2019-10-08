@@ -8,7 +8,7 @@ employees = pd.read_csv('./extracts/employees.csv')
 orders = pd.read_csv('./extracts/orders.csv')
 products = pd.read_csv('./extracts/products.csv')
 
-#split the data into the tables I want in the SQL dataset and ... into lists of dictionaries
+#split the data into the tables I want in the SQL dataset and convert them into lists of dictionaries
 offices = employees.loc[:,['office_code','city','state','country','office_location']].drop_duplicates().to_dict('records')
 employees = employees.loc[:,['office_code','employee_number','last_name','first_name','reports_to','job_title']].to_dict('records')
 customers = orders.loc[:,['customer_number','customer_name','contact_last_name', 'contact_first_name', 'city', 'state', 'country', 'credit_limit', 'customer_location']].drop_duplicates().to_dict('records')
@@ -18,6 +18,8 @@ orders = orders.loc[:,[ 'order_number', 'order_date', 'required_date' ,'shipped_
 orders.comments = orders.comments.astype(str)
 orders = orders.to_dict('records')
 
+#I had issues dealing with missing values directly in Pandas dataframes, 
+#What I did is to parse through the dictionaries and remove the keys with NaN values. 
 
 #remove from dictionary every key that has a nan value
 for o in orders:
@@ -51,6 +53,7 @@ for o in customers:
         del o['state']
 
 
+#once the data are ready, I use the dataset package to insert them in the sql tables
 db = dataset.connect("postgresql://postgres@localhost/ds_assignment1")
 emp = db['employees']
 of = db['offices']
