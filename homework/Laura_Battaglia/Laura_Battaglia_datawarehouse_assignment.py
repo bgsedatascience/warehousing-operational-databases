@@ -9,12 +9,14 @@ employees = pd.read_csv('warehousing-operational-databases/homework/extracts/emp
 orders = pd.read_csv('warehousing-operational-databases/homework/extracts/orders.csv')
 products = pd.read_csv('warehousing-operational-databases/homework/extracts/products.csv')
 
-#define relational tables 
+#define relational tables (and drop duplicates)
 offices = employees[['office_code', 'city','state', 'country','office_location']].copy()
 offices = offices.drop_duplicates()
 
 new_employees = employees[['employee_number', 'last_name', 'first_name','reports_to','job_title','office_code']].copy()
 new_employees = new_employees.drop_duplicates()
+
+#replace nas with -1 so to be able to change type to int
 new_employees.reports_to = new_employees.reports_to.fillna('-1').astype(int)
 
 
@@ -23,6 +25,8 @@ customers = customers.drop_duplicates()
 
 new_orders = orders[[ 'order_number', 'order_date', 'required_date' ,'shipped_date', 'status', 'comments', 'customer_number']].copy()
 new_orders = new_orders.drop_duplicates()
+
+#replace nas with 1111-11-11 so to be able to change type to date
 new_orders[[ 'order_date', 'required_date' ,'shipped_date']] = new_orders[[ 'order_date', 'required_date' ,'shipped_date']].fillna(datetime.date(1111,11,11))
 products_ordered = orders[[ 'order_number', 'product_code', 'quantity_ordered', 'price_each', 'order_line_number']].copy()
 
