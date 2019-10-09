@@ -130,7 +130,7 @@ def load_orders_file(conn, filename):
     # Convert byte columns to string literals
     orders_full["customer_location"] = (orders_full["customer_location"]
         .apply(ast.literal_eval))
-    # Fix nulls to None as it messes with the times
+    # Fix nulls to None as it messes with the dates
     orders_full = orders_full.where(pd.notnull(orders_full), None)
     # Split orders into three tables; customers, orders and order_items
     load_customers_table(conn, orders_full)
@@ -188,7 +188,7 @@ def load_office_table(conn, employees_full):
     load_table(conn, 'offices', offices_df)
 
 def load_employees_table(conn, employees_full):
-    """Load the records into the employeesxsxs table"""
+    """Load the records into the employees table"""
     employees_col_list = {'employee_number', 'last_name', 'first_name',
                           'reports_to', 'job_title'}
     employees_df = employees_full[employees_col_list]
