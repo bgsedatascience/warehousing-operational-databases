@@ -4,10 +4,10 @@ import ast
 
 #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #--
 #
-# db_connection Class
+# DBConnection Class
 #
 #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #--
-class db_connection():
+class DBConnection():
     """Class to handle the database connection"""
     def __init__(self,
                  dbname="company_db",
@@ -190,18 +190,18 @@ def load_office_table(conn, employees_full):
 def load_employees_table(conn, employees_full):
     """Load the records into the employees table"""
     employees_col_list = {'employee_number', 'last_name', 'first_name',
-                          'reports_to', 'job_title'}
+                          'reports_to', 'job_title', 'office_code'}
     employees_df = employees_full[employees_col_list]
     load_table(conn, 'employees', employees_df)
 
 #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #--
 #
-# Code to execute the loads
+# Code to execute the load
 #
 #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #-- #--
 if __name__ == "__main__":
     # Create database db_connection
-    conn = db_connection()
+    conn = DBConnection()
     load_products_file(conn, "extracts/products.csv")
     load_employees_file(conn, 'extracts/employees.csv')
     load_orders_file(conn, 'extracts/orders.csv')
