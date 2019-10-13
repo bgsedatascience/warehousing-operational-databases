@@ -14,7 +14,7 @@ employees = employees.loc[:,['office_code','employee_number','last_name','first_
 customers = orders.loc[:,['customer_number','customer_name','contact_last_name', 'contact_first_name', 'city', 'state', 'country', 'credit_limit', 'customer_location']].drop_duplicates().to_dict('records')
 products_ordered = orders.loc[:,[ 'order_number', 'product_code', 'quantity_ordered', 'price_each', 'order_line_number']].to_dict('records')
 products = products.to_dict('records')
-orders = orders.loc[:,[ 'order_number', 'order_date', 'required_date' ,'shipped_date', 'status', 'comments', 'sales_rep_employee_number']].drop_duplicates()
+orders = orders.loc[:,[ 'order_number', 'order_date', 'required_date' ,'shipped_date', 'status', 'comments', 'sales_rep_employee_number','customer_number']].drop_duplicates()
 orders.comments = orders.comments.astype(str)
 orders = orders.to_dict('records')
 
@@ -68,4 +68,3 @@ cust.insert_many(customers)
 pr.insert_many(products)
 orde.insert_many(orders)
 pr_ord.insert_many(products_ordered)
-db.commit()
