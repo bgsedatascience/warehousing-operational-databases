@@ -1,3 +1,8 @@
+DROP DATABASE alex;
+CREATE DATABASE alex;
+\c alex;
+
+
 CREATE TABLE employee_id (
 SELECT employee_number, last_name, first_name ,job_title, office_code
 FROM employees);
