@@ -1,10 +1,13 @@
 import psycopg2
+
+# Connect to DB
+
 conn = psycopg2.connect("dbname=alex user=postgres host=localhost")
 cur = conn.cursor()
 print (conn.encoding)
 
+# Create table EMPLOYEES
 
-# crete table EMPLOYEES
 cur.execute("""CREATE TABLE employees(
 office_code integer,
 employee_number integer PRIMARY KEY,
@@ -17,20 +20,21 @@ state text,
 country text)""")
 conn.commit()
 
-# Load to db
+# Load to the DB
+
 with open('/home/alex/Desktop/employees.csv', 'r') as f:
 # Notice that we don't need the `csv` module.
     next(f) # Skip the header row.
     cur.copy_from(f, 'employees', sep=',')
     conn.commit()
-conn = psycopg2.connect("dbname=alex user=postgres host=localhost")
-cur = conn.cursor()
 
-# crete table orders
+
+# Create table ORDERS
 
 cur.execute("""CREATE TABLE orders(
+order_id INTEGER PRIMARY KEY,
 customer_number VARCHAR,
-order_number VARCHAR PRIMARY KEY,
+order_number VARCHAR,
 product_code VARCHAR,
 quantity_ordered VARCHAR,
 price_each VARCHAR,
@@ -39,7 +43,7 @@ order_date date,
 required_date date,
 shipped_date date,
 status text,
-comments text,
+comments VARCHAR,
 customer_name text,
 contact_last_name text,
 contact_first_name text,
@@ -51,15 +55,25 @@ credit_limit VARCHAR)
 """)
 conn.commit()
 
-# Load to db
+# Load to the DB
 
+import dataset
+import pandas as pd
+
+orders = pd.read_csv('/home/alex/Desktop/orders.csv')
+orders['orders_id'] = orders.index
+orders = orders.fillna('1')
+db = dataset.connect('postgresql://postgres@localhost:5432/alex')
+db['orders'].insert_many(orders.to_dict('records'))
+
+"""
 with open('/home/alex/Desktop/orders.csv', 'r') as f:
-# Notice that we don't need the `csv` module.
-    next(f) # Skip the header row.
+    next(f)
     cur.copy_from(f, 'orders', sep=',')
     conn.commit()
+"""
 
-# crete table products
+# Create table PRODUCTS
 
 cur.execute("""CREATE TABLE products(
 product_line text,
@@ -73,15 +87,13 @@ _m_s_r_p VARCHAR,
 html_description text)""")
 conn.commit()
 
-# Load to db
+# Load to the DB
 
 with open('/home/alex/Desktop/products.csv', 'r') as f:
-# Notice that we don't need the `csv` module.
-    next(f) # Skip the header row.
+    next(f)
     cur.copy_from(f, 'products', sep=',')
     conn.commit()
 
+# Close connection to the DB
 cur.close()
 conn.close()
-
-
