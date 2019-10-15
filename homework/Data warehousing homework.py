@@ -13,14 +13,9 @@ orders = pd.read_csv("orders.csv")
 employees = pd.read_csv("employees.csv")
 
 #Create sub-tables
-orders['order_ID']=np.arange(len(orders))
-customers = orders[['customer_number', 'customer_name', 'contact_last_name', 'contact_first_name', 'city', 'state', 'country', 'sales_rep_employee_number', 'credit_limit', 'customer_location', 'order_ID']].copy()
-customers.drop('order_ID', axis=1, inplace=True)
+customers = orders[['customer_number', 'customer_name', 'contact_last_name', 'contact_first_name', 'city', 'state', 'country', 'sales_rep_employee_number', 'credit_limit', 'customer_location']].copy()
 customers_clean = customers.drop_duplicates()
-orders_clean = orders[['order_number', 'customer_number', 'product_code', 'quantity_ordered', 'price_each', 'order_line_number', 'order_date', 'required_date', 'shipped_date', 'status', 'comments', 'order_ID']]
-orders_delivery_clean = orders_clean[['order_number','order_date', 'required_date', 'shipped_date','price_each', 'status', 'comments']].drop_duplicates()
-orders_delivery_clean_denulled= orders_delivery_clean.astype(object).where(pd.notnull(orders_delivery_clean), None)
-orders_delivery_clean_denulled['order_delivery_id']= np.arange(len(orders_delivery_clean_denulled))
+orders_clean = orders[['order_number', 'customer_number', 'product_code', 'quantity_ordered', 'price_each', 'order_line_number', 'order_date', 'required_date', 'shipped_date', 'status', 'comments']]
 orders_composition_clean = orders_clean[['order_number', 'customer_number', 'product_code', 'quantity_ordered', 'price_each', 'order_line_number']]
 orders_composition_clean_denulled=orders_composition_clean.astype(object).where(pd.notnull(orders_composition_clean), None)
 offices_clean = employees[['office_code', 'city', 'state', 'office_location', 'country']].drop_duplicates()
@@ -30,6 +25,9 @@ product_stock_details_clean_denulled=product_stock_details_clean.astype(object).
 products_clean = products[['product_code', 'product_line', 'product_scale', 'product_vendor', 'html_description']].drop_duplicates()
 products_clean_denulled=products_clean.astype(object).where(pd.notnull(product_stock_details_clean), None)
 products_stock_details_clean_copy= product_stock_details_clean.copy()
+orders_delivery_clean = orders_clean[['order_number','order_date', 'required_date', 'shipped_date','price_each', 'status', 'comments']].drop_duplicates()
+orders_delivery_clean_denulled= orders_delivery_clean.astype(object).where(pd.notnull(orders_delivery_clean), None)
+orders_delivery_clean_denulled['order_delivery_id']= np.arange(len(orders_delivery_clean_denulled))
 
 #Install psycopg2 package
 import dataset

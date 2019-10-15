@@ -59,7 +59,7 @@ product_name VARCHAR,
 quantity_in_stock INTEGER,
 product_description VARCHAR,
 buy_price MONEY,
-_m_s_r_p NUMERIC
+_m_s_r_p MONEY
 );
 
 CREATE TABLE products_1 (
